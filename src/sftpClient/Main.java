@@ -1,7 +1,12 @@
 package sftpClient;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        REPL repl = new REPL();
+        repl.repl();
     }
 }
