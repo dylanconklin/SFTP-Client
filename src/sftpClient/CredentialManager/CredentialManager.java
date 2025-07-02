@@ -6,19 +6,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CredentialManager {
-    static public Credentials getLoginCredentials() {
+    public static File credentialFile() {
+        return new File("login.cred");
+    }
+
+    static public Credentials getLoginCredentials(File file) {
         Credentials credentials;
         try {
-            credentials = Credentials.fromJSON(String.join("\n", IO.read(new File("login.cred"))));
+            credentials = Credentials.fromJSON(String.join("\n", IO.read(file)));
         } catch(Exception e) {
             credentials = createNewLogin();
-            saveLoginCredentials(credentials);
+            saveLoginCredentials(credentials, file);
         }
         return credentials;
     }
 
-    static public void saveLoginCredentials(Credentials credentials) {
-        IO.write(credentials.toJSON(), new File("login.cred"));
+    static public void saveLoginCredentials(Credentials credentials, File file) {
+        IO.write(credentials.toJSON(), file);
     }
 
     static Credentials createNewLogin() {
