@@ -12,4 +12,11 @@ public class Credentials {
         this.username = username;
         this.password = password;
     }
+
+    Credentials() {
+        this.host = "";
+        this.port = 0;
+        this.username = "";
+        this.password = "";
+    }
 }
