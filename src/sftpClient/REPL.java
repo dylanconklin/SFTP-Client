@@ -1,7 +1,6 @@
 package sftpClient;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import sftpClient.IO.IO;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -17,15 +16,7 @@ public class REPL {
     }
 
     public String read() {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String input = "";
-        System.out.print(">>> ");
-        try {
-            input = bufferedReader.readLine();
-        } catch(Exception e) {
-            input = "";
-        }
-        return input;
+        return IO.getInputFromUser(">>> ");
     }
 
     public ArrayList<String> eval(String input) {
