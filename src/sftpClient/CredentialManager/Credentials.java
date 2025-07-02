@@ -4,19 +4,19 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class Credentials {
-    String host;
-    int port;
-    String username;
-    String password;
+    public String host;
+    public int port;
+    public String username;
+    public String password;
 
-    Credentials(String host, int port, String username, String password) {
+    public Credentials(String host, int port, String username, String password) {
         this.host = host;
         this.port = port;
         this.username = username;
         this.password = password;
     }
 
-    Credentials() {
+    public Credentials() {
         this.host = "";
         this.port = 0;
         this.username = "";
@@ -38,7 +38,7 @@ public class Credentials {
             JSONObject jo = (JSONObject) new JSONParser().parse(json);
             credentials = new Credentials(
                     (String) jo.get("host"),
-                    (Integer) jo.get("port"),
+                    (int) ((long) jo.get("port")),
                     (String) jo.get("username"),
                     (String) jo.get("password")
             );
