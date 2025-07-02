@@ -14,6 +14,7 @@ public class IO {
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(text);
+            bw.flush();
         } catch(Exception e) {
         }
     }
@@ -23,7 +24,6 @@ public class IO {
         try {
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
-            String input;
             result = br.lines().collect(Collectors.toCollection(ArrayList::new));
         } catch(Exception e) {
         }
