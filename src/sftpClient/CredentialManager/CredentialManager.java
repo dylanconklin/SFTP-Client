@@ -9,8 +9,7 @@ public class CredentialManager {
     static public Credentials getLoginCredentials() {
         Credentials credentials;
         try {
-            ArrayList<String> input = IO.read(new File("login.cred"));
-            credentials = new Credentials(input.get(0), Integer.parseInt(input.get(1)), input.get(2), input.get(3));
+            credentials = Credentials.fromJSON(String.join("\n", IO.read(new File("login.cred"))));
         } catch(Exception e) {
             credentials = createNewLogin();
             saveLoginCredentials(credentials);
@@ -19,16 +18,7 @@ public class CredentialManager {
     }
 
     static public void saveLoginCredentials(Credentials credentials) {
-        IO.write(new ArrayList<>(Arrays.asList(
-                credentials.host,
-                Integer.toString(credentials.port),
-                credentials.username,
-                credentials.password
-        )), new File("login.cred"));
-    }
-
-    static public void saveLoginCredentials(String host, int port, String username, String password) {
-        saveLoginCredentials(new Credentials(host, port, username, password));
+        IO.write(credentials.toJSON(), new File("login.cred"));
     }
 
     static Credentials createNewLogin() {
