@@ -52,7 +52,7 @@ public class CredentialManager {
             port = Integer.parseInt(bufferedReader.readLine());
             System.out.print("username : ");
             username = bufferedReader.readLine();
-            System.out.print("passward : ");
+            System.out.print("password : ");
             password = bufferedReader.readLine();
             credentials = new Credentials(host, port, username, password);
         } catch(Exception e) {
