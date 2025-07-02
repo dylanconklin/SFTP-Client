@@ -32,18 +32,15 @@ public class Credentials {
         return jo.toJSONString();
     }
 
-    static Credentials fromJSON(String json) {
+    static Credentials fromJSON(String json) throws Exception {
         Credentials credentials = new Credentials();
-        try {
-            JSONObject jo = (JSONObject) new JSONParser().parse(json);
-            credentials = new Credentials(
-                    (String) jo.get("host"),
-                    (int) ((long) jo.get("port")),
-                    (String) jo.get("username"),
-                    (String) jo.get("password")
-            );
-        } catch (Exception e) {
-        }
+        JSONObject jo = (JSONObject) new JSONParser().parse(json);
+        credentials = new Credentials(
+                (String) jo.get("host"),
+                (int) ((long) jo.get("port")),
+                (String) jo.get("username"),
+                (String) jo.get("password")
+        );
         return credentials;
     }
 }
