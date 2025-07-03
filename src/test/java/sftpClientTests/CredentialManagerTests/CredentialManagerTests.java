@@ -39,15 +39,18 @@ public class CredentialManagerTests {
     }
 
     @org.junit.jupiter.api.Test
-    void cannotReadCredentialsFromInvalidFile() {
+    void cannotReadCredentialsFromMissingFile() {
         // given
-        File file = new File(testFilesPath + "invalidLogin.json");
-        // TODO: Simulate user input for System.in
+        File file = new File(testFilesPath + "missing.json");
+        String input = "pdx.edu\n22\nusername\npassword\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        Credentials expectedCredentials = new Credentials("pdx.edu", 22, "username", "password");
 
         // when
         Credentials credentials = CredentialManager.getLoginCredentials(file);
+        file.delete();
 
         // then
-        fail();
+        assert(credentials.toJSON().equals(expectedCredentials.toJSON()));
     }
 }
