@@ -16,13 +16,6 @@ public class Credentials {
         this.password = password;
     }
 
-    public Credentials() {
-        this.host = "";
-        this.port = 0;
-        this.username = "";
-        this.password = "";
-    }
-
     public String toJSON() {
         JSONObject jo = new JSONObject();
         jo.put("host", host);
