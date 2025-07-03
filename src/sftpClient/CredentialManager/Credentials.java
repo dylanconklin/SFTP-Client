@@ -15,7 +15,15 @@ public class Credentials {
         this.username = username;
         this.password = password;
     }
-
+    @Override
+    public String toString() {
+        return  "----Curr Cred---- \n" +
+                "Host: " + host + "\n" +
+                "Port: " + port + "\n" +
+                "Username: " + username + "\n" +
+                "Password: " + password +
+                "-----------------";
+    }
     public String toJSON() {
         JSONObject jo = new JSONObject();
         jo.put("host", host);

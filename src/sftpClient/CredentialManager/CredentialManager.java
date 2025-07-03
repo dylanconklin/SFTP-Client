@@ -12,6 +12,7 @@ public class CredentialManager {
         Credentials credentials;
         try {
             credentials = Credentials.fromJSON(String.join("\n", IO.read(file)));
+            System.out.println(credentials.toString());
         } catch(Exception e) {
             credentials = createNewLogin();
             saveLoginCredentials(credentials, file);
