@@ -10,7 +10,6 @@ public class CredentialManagerTests {
 
     private final InputStream SystemIn = System.in;
     private final PrintStream SystemOut = System.out;
-    private ByteArrayInputStream userInput;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
