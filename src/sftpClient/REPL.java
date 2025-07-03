@@ -1,10 +1,18 @@
 package sftpClient;
 
+import sftpClient.CredentialManager.CredentialManager;
+import sftpClient.CredentialManager.Credentials;
 import sftpClient.IO.IO;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class REPL {
+    Credentials credentials;
+
+    REPL() {
+        credentials = CredentialManager.getLoginCredentials(CredentialManager.credentialFile());
+    }
+
     public void repl() {
         String input = "";
         ArrayList<String> output = new ArrayList<>();
