@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class IO {
+    private static final BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
+
     public static void write(ArrayList<String> text, File file) {
         write(String.join("\n", text), file);
     }
@@ -35,11 +37,10 @@ public class IO {
     }
 
     public static String getInputFromUser(String prompt) {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
         System.out.print(prompt);
         try {
-            input = bufferedReader.readLine();
+            input = userInput.readLine();
         } catch(Exception e) {
         }
         return input;
