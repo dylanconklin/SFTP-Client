@@ -27,15 +27,13 @@ public class CredentialManagerTests {
     void canReadCredentialsFromValidFile() {
         // given
         File file = new File(testFilesPath + "validLogin.json");
+        Credentials expectedCredentials = new Credentials("pdx.edu", 22, "user", "abc123");
 
         // when
         Credentials credentials = CredentialManager.getLoginCredentials(file);
 
         // then
-        assert(credentials.host != null && !credentials.host.isEmpty());
-        assert(credentials.port != 0);
-        assert(credentials.username != null && !credentials.username.isEmpty());
-        assert(credentials.password != null && !credentials.password.isEmpty());
+        assert (credentials.toJSON().equals(expectedCredentials.toJSON()));
     }
 
     @org.junit.jupiter.api.Test
@@ -51,6 +49,6 @@ public class CredentialManagerTests {
         file.delete();
 
         // then
-        assert(credentials.toJSON().equals(expectedCredentials.toJSON()));
+        assert (credentials.toJSON().equals(expectedCredentials.toJSON()));
     }
 }
