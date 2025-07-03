@@ -10,7 +10,7 @@ public class REPL {
     Credentials credentials;
 
     REPL() {
-        credentials = CredentialManager.getLoginCredentials(CredentialManager.credentialFile());
+        this.credentials = CredentialManager.getLoginCredentials(CredentialManager.credentialFile());
     }
 
     public void repl() {
