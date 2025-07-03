@@ -20,6 +20,7 @@ public class REPL {
             output = eval(input);
             print(output);
         }
+        this.client.disconnect();
     }
 
     public String read() {
