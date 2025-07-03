@@ -2,8 +2,6 @@ package sftpClient.CredentialManager;
 
 import sftpClient.IO.IO;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CredentialManager {
     public static File credentialFile() {
@@ -26,12 +24,10 @@ public class CredentialManager {
     }
 
     static Credentials createNewLogin() {
-        Credentials credentials;
         String host = IO.getInputFromUser("hostname : ");
         int port = Integer.parseInt(IO.getInputFromUser("port     : "));
         String username = IO.getInputFromUser("username : ");
         String password = IO.getInputFromUser("password : ");
-        credentials = new Credentials(host, port, username, password);
-        return credentials;
+        return new Credentials(host, port, username, password);
     }
 }

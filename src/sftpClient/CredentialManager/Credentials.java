@@ -33,14 +33,12 @@ public class Credentials {
     }
 
     static Credentials fromJSON(String json) throws Exception {
-        Credentials credentials = new Credentials();
         JSONObject jo = (JSONObject) new JSONParser().parse(json);
-        credentials = new Credentials(
+        return new Credentials(
                 (String) jo.get("host"),
                 (int) ((long) jo.get("port")),
                 (String) jo.get("username"),
                 (String) jo.get("password")
         );
-        return credentials;
     }
 }
