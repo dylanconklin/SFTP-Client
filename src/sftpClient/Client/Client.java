@@ -1,6 +1,7 @@
 package sftpClient.Client;
 
 import com.jcraft.jsch.*;
+import sftpClient.CredentialManager.Credentials;
 
 public class Client {
     Credentials credentials;
