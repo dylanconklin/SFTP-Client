@@ -2,31 +2,25 @@ package test.java.sftpClientTests.CredentialManagerTests;
 
 import sftpClient.CredentialManager.CredentialManager;
 import sftpClient.CredentialManager.Credentials;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.util.List;
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.fail;
+import java.io.*;
 
 public class CredentialManagerTests {
     static String dir = "src/test/java/sftpClientTests/CredentialManagerTests/";
     static String testFilesPath = dir + "TestFiles/";
 
     private final InputStream SystemIn = System.in;
+    private final PrintStream SystemOut = System.out;
     private ByteArrayInputStream userInput;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
+        System.setOut(new PrintStream(OutputStream.nullOutputStream()));
     }
 
     @org.junit.jupiter.api.AfterEach
     void tearDown() {
-    }
-
-    @org.junit.jupiter.api.AfterAll
-    static void deleteFiles() {
+        System.setIn(SystemIn);
+        System.setOut(SystemOut);
     }
 
     @org.junit.jupiter.api.Test
