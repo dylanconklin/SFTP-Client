@@ -1,11 +1,14 @@
 package sftpClient.Intent;
 
+import java.util.ArrayList;
+
 public class ChangePermissionIntent extends Intent {
     @Override
-    void parse() {
+    void parse(ArrayList<String> args) {
     }
 
     @Override
-    void execute() {
+    public ArrayList<String> execute() {
+        return null;
     }
 }

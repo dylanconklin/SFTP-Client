@@ -1,11 +1,18 @@
 package sftpClient.Intent;
 
+import java.util.ArrayList;
+
 public class ListIntent extends Intent {
     @Override
-    void parse() {
+    void parse(ArrayList<String> args) {
     }
 
     @Override
-    void execute() {
+    public ArrayList<String> execute() {
+        ArrayList<String> output = new ArrayList<>();
+        output.add("Listing All the Files In the Current Directory....  ");
+        // Actually list all the files in the current directory
+        // Show Success of Fail
+        return null;
     }
 }
