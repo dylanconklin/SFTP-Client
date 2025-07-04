@@ -12,7 +12,7 @@ public class UploadIntent extends Intent {
     }
 
     @Override
-    public ArrayList<String> execute() {
+    public ArrayList<String> execute(Client client) {
         ArrayList<String> output = new ArrayList<>();
         String filename = args.get(1);
         output.add("Uploading ....  " + filename + " .... Please Wait");

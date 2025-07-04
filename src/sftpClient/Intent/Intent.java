@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Intent {
     ArrayList<String> args;
     abstract void parse(ArrayList<String> args);
-    abstract public ArrayList<String> execute();
+    abstract public ArrayList<String> execute(Client client);
 
     public static Intent getIntent(String input) {
         ArrayList<String> output = new ArrayList<>();

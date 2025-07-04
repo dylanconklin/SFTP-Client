@@ -8,7 +8,7 @@ public class RenameIntent extends Intent {
     }
 
     @Override
-    public ArrayList<String> execute() {
+    public ArrayList<String> execute(Client client) {
         return null;
     }
 }
