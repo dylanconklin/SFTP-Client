@@ -12,6 +12,7 @@ public class CredentialManager {
         Credentials credentials;
         try {
             credentials = Credentials.fromJSON(String.join("\n", IO.read(file)));
+            System.out.println(credentials.toString());
         } catch(Exception e) {
             credentials = createNewLogin();
             saveLoginCredentials(credentials, file);
@@ -24,10 +25,32 @@ public class CredentialManager {
     }
 
     static Credentials createNewLogin() {
-        String host = IO.getInputFromUser("hostname : ");
-        int port = Integer.parseInt(IO.getInputFromUser("port     : "));
-        String username = IO.getInputFromUser("username : ");
-        String password = IO.getInputFromUser("password : ");
-        return new Credentials(host, port, username, password);
+        while (true) {
+            String host = IO.getInputFromUser("hostname : ").trim();
+            String portInput = IO.getInputFromUser("port     : ").trim();
+            String username = IO.getInputFromUser("username : ").trim();
+            String password = IO.getInputFromUser("password : ").trim();
+
+            // Simple validation checks
+            if (host.isEmpty() || username.isEmpty() || password.isEmpty()) {
+                System.out.println("Host, username, and password cannot be empty. Please try again.\n");
+                continue;
+            }
+
+            int port;
+            try {
+                port = Integer.parseInt(portInput);
+                if (port < 1 || port > 999999) {
+                    System.out.println("Port must be between 1 and 999999. Please try again.\n");
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid port number. Please enter a numeric value.\n");
+                continue;
+            }
+
+            // All validations passed
+            return new Credentials(host, port, username, password);
+        }
     }
 }
