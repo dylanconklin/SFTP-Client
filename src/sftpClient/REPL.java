@@ -1,5 +1,6 @@
 package sftpClient;
 
+import sftpClient.Client.Client;
 import sftpClient.CredentialManager.CredentialManager;
 import sftpClient.CredentialManager.Credentials;
 import sftpClient.IO.IO;
@@ -9,9 +10,11 @@ import java.util.Objects;
 
 public class REPL {
     Credentials credentials;
+    Client client;
 
     REPL() {
         this.credentials = CredentialManager.getLoginCredentials(CredentialManager.credentialFile());
+        this.client = new Client(this.credentials);
     }
 
     public void repl() {
@@ -22,6 +25,7 @@ public class REPL {
             output = eval(input);
             print(output);
         }
+        this.client.disconnect();
     }
 
     public String read() {
