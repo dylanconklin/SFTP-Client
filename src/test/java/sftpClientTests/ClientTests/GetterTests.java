@@ -21,7 +21,7 @@ public class GetterTests {
     Credentials credentials;
     static String hostname = "localhost";
     static String username = "user";
-    static String password = "user";
+    static String password = "pass";
 
     @Before
     public void setUp() {
