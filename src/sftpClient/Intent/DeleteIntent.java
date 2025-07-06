@@ -13,7 +13,7 @@ public class DeleteIntent extends Intent {
     }
 
     @Override
-    public ArrayList<String> execute(Client client) {
+    public ArrayList<String> execute(Client client, ArrayList<String> args) {
         ArrayList<String> output = new ArrayList<>();
         String filename = args.get(1);
         output.add("Deleting ....  " + filename + " .... Please Wait");

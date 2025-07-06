@@ -9,7 +9,7 @@ public class SeachIntent extends Intent {
     }
 
     @Override
-    public ArrayList<String> execute(Client client) {
+    public ArrayList<String> execute(Client client, ArrayList<String> args) {
         return null;
     }
 }
