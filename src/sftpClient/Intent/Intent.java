@@ -1,6 +1,7 @@
 package sftpClient.Intent;
 
 import java.util.ArrayList;
+import sftpClient.Client.Client;
 
 public abstract class Intent {
     ArrayList<String> args;

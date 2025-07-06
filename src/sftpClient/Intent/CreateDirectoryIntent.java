@@ -1,6 +1,7 @@
 package sftpClient.Intent;
 
 import java.util.ArrayList;
+import sftpClient.Client.Client;
 
 public class CreateDirectoryIntent extends Intent {
     @Override
