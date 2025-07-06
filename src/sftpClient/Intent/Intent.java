@@ -8,10 +8,8 @@ public abstract class Intent {
     abstract void parse(ArrayList<String> args);
     abstract public ArrayList<String> execute(Client client, ArrayList<String> args);
 
-    public static Intent getIntent(String input) {
+    public static Intent getIntent(String command) {
         ArrayList<String> output = new ArrayList<>();
-        String[] parts = input.trim().split("\\s+");
-        String command = parts[0];
         Intent intent = null;
         switch (command) {
             case "get":

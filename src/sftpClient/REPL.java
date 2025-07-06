@@ -6,6 +6,7 @@ import sftpClient.CredentialManager.Credentials;
 import sftpClient.IO.IO;
 import sftpClient.Intent.Intent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class REPL {
@@ -34,8 +35,9 @@ public class REPL {
 
     public ArrayList<String> eval(String input) {
         ArrayList<String> output = new ArrayList<>();
-        Intent intent = Intent.getIntent(input);
-        intent.execute(client);
+        ArrayList<String> args = new ArrayList<>(Arrays.asList(input.trim().split("\\s+")));
+        Intent intent = Intent.getIntent(args.get(0));
+        intent.execute(client, args);
         return output;
     }
 
