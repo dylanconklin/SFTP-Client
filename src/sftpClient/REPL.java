@@ -35,7 +35,7 @@ public class REPL {
     public ArrayList<String> eval(String input) {
         ArrayList<String> output = new ArrayList<>();
         Intent intent = Intent.getIntent(input);
-        intent.execute();
+        intent.execute(client);
         return output;
     }
 
