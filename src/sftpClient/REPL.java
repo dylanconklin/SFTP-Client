@@ -34,11 +34,10 @@ public class REPL {
     }
 
     public ArrayList<String> eval(String input) {
-        ArrayList<String> output = new ArrayList<>();
         ArrayList<String> args = new ArrayList<>(Arrays.asList(input.trim().split("\\s+")));
-        Intent intent = Intent.getIntent(args.get(0));
-        intent.execute(client, args);
-        return output;
+        return Intent
+                .getIntent(args.get(0))
+                .execute(client, args);
     }
 
     public void print(ArrayList<String> output) {

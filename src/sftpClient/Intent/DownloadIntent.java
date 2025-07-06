@@ -1,6 +1,11 @@
 package sftpClient.Intent;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import sftpClient.Client.Client;
 
 public class DownloadIntent extends Intent {
@@ -15,10 +20,19 @@ public class DownloadIntent extends Intent {
     @Override
     public ArrayList<String> execute(Client client, ArrayList<String> args) {
         ArrayList<String> output = new ArrayList<>();
-        String filename = args.get(1);
-        output.add("Downloading ....  " + filename + " .... Please Wait");
-        // Get the Actual file here to download
-        // Show Success of Fail
-        return null;
+        new ArrayList<>(args.subList(1, args.size()))
+                .forEach( filename -> {
+                    File destFile = new File(filename);
+                    try {
+                        OutputStream dest = new FileOutputStream(destFile);
+                        client.sftp.get(filename, dest);
+                        output.add("Downloaded " + filename + " successfully.");
+                        dest.close();
+                    } catch (Exception e) {
+                        destFile.delete();
+                        output.add("Failed to download " + filename + ".");
+                    }
+                });
+        return output;
     }
 }
