@@ -15,7 +15,7 @@ public class DownloadIntent extends Intent {
     void parse(ArrayList<String> args) {
         ArrayList<String> output = new ArrayList<>();
         if (args.size() < 2) {
-            output.add("get Error: Missing Parameters Like File Names");
+            output.add("Error: Missing Parameters Like File Names");
         }
         files = new ArrayList<>(args.subList(1, args.size()));
     }
