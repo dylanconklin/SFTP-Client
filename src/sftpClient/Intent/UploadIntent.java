@@ -1,24 +1,42 @@
 package sftpClient.Intent;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 import sftpClient.Client.Client;
 
 public class UploadIntent extends Intent {
+    ArrayList<String> files;
+
     @Override
     void parse(ArrayList<String> args) {
         ArrayList<String> output = new ArrayList<>();
         if (args.size() < 2) {
-            output.add("Put Error: Missing Parameters Like File Names");
+            output.add("Error: Missing Parameters Like File Names");
         }
+        files = new ArrayList<>(args.subList(1, args.size()));
     }
 
     @Override
     public ArrayList<String> execute(Client client, ArrayList<String> args) {
-        ArrayList<String> output = new ArrayList<>();
-        String filename = args.get(1);
-        output.add("Uploading ....  " + filename + " .... Please Wait");
-        // Upload the actual file here
-        // Show Success of Fail
-        return null;
+        parse(args);
+        return files
+                .stream()
+                .map(File::new)
+                .map(file -> {
+                    String result = "Failed to upload " + file.getName() + ".";
+                    try {
+                        OutputStream dest = new FileOutputStream(file);
+                        client.sftp.put(new FileInputStream(file), file.getName());
+                        result = "Uploaded " + file.getName() + " successfully.";
+                        dest.close();
+                    } catch (Exception e) {}
+                    return result;
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }
