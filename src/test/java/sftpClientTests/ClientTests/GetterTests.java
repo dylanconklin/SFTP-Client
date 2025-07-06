@@ -28,9 +28,9 @@ public class GetterTests {
         sftpServer.addUser(username, password);
 
         try {
-            sftpServer.putFile("/file1.txt", "", StandardCharsets.UTF_8);
-            sftpServer.putFile("/file3.txt", "", StandardCharsets.UTF_8);
-            sftpServer.putFile("/file5.txt", "", StandardCharsets.UTF_8);
+            sftpServer.putFile("file1.txt", "", StandardCharsets.UTF_8);
+            sftpServer.putFile("file3.txt", "", StandardCharsets.UTF_8);
+            sftpServer.putFile("file5.txt", "", StandardCharsets.UTF_8);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             fail();
@@ -42,8 +42,8 @@ public class GetterTests {
     @Test
     public void getSingleExistingFileTest() {
         // given
-        ArrayList<String> args = new ArrayList<>(Arrays.asList("get", "/file1.txt"));
-        ArrayList<String> expectedOutput = new ArrayList<>(Arrays.asList("Downloaded /file1.txt successfully."));
+        ArrayList<String> args = new ArrayList<>(Arrays.asList("get", "file1.txt"));
+        ArrayList<String> expectedOutput = new ArrayList<>(Arrays.asList("Downloaded file1.txt successfully."));
 
         // when
         ArrayList<String> output = intent.execute(client, args);
@@ -55,11 +55,11 @@ public class GetterTests {
     @Test
     public void getMultipleExistingFilesTest() {
         // given
-        ArrayList<String> args = new ArrayList<>(Arrays.asList("get", "/file1.txt", "/file3.txt", "/file5.txt"));
+        ArrayList<String> args = new ArrayList<>(Arrays.asList("get", "file1.txt", "file3.txt", "file5.txt"));
         ArrayList<String> expectedOutput = new ArrayList<>(Arrays.asList(
-                "Downloaded /file1.txt successfully.",
-                "Downloaded /file3.txt successfully.",
-                "Downloaded /file5.txt successfully."
+                "Downloaded file1.txt successfully.",
+                "Downloaded file3.txt successfully.",
+                "Downloaded file5.txt successfully."
         ));
 
         // when
@@ -72,8 +72,8 @@ public class GetterTests {
     @Test
     public void getSingleMissingFileTest() {
         // given
-        ArrayList<String> args = new ArrayList<>(Arrays.asList("get", "/file2.txt"));
-        ArrayList<String> expectedOutput = new ArrayList<>(Arrays.asList("Failed to download /file2.txt."));
+        ArrayList<String> args = new ArrayList<>(Arrays.asList("get", "file2.txt"));
+        ArrayList<String> expectedOutput = new ArrayList<>(Arrays.asList("Failed to download file2.txt."));
 
         // when
         ArrayList<String> output = intent.execute(client, args);
@@ -85,10 +85,10 @@ public class GetterTests {
     @Test
     public void getMultipleMissingFilesTest() {
         // given
-        ArrayList<String> args = new ArrayList<>(Arrays.asList("get", "/file2.txt", "/file4.txt"));
+        ArrayList<String> args = new ArrayList<>(Arrays.asList("get", "file2.txt", "file4.txt"));
         ArrayList<String> expectedOutput = new ArrayList<>(Arrays.asList(
-                "Failed to download /file2.txt.",
-                "Failed to download /file4.txt."
+                "Failed to download file2.txt.",
+                "Failed to download file4.txt."
         ));
 
         // when
@@ -101,13 +101,13 @@ public class GetterTests {
     @Test
     public void getMultipleExistingAndMissingFilesTest() {
         // given
-        ArrayList<String> args = new ArrayList<>(Arrays.asList("get", "file1.txt", "/file2.txt", "/file3.txt", "/file4.txt", "/file5.txt"));
+        ArrayList<String> args = new ArrayList<>(Arrays.asList("get", "file1.txt", "file2.txt", "file3.txt", "file4.txt", "file5.txt"));
         ArrayList<String> expectedOutput = new ArrayList<>(Arrays.asList(
-                "Downloaded /file1.txt successfully.",
-                "Failed to download /file2.txt.",
-                "Downloaded /file3.txt successfully.",
-                "Failed to download /file4.txt.",
-                "Downloaded /file5.txt successfully."
+                "Downloaded file1.txt successfully.",
+                "Failed to download file2.txt.",
+                "Downloaded file3.txt successfully.",
+                "Failed to download file4.txt.",
+                "Downloaded file5.txt successfully."
         ));
 
         // when
