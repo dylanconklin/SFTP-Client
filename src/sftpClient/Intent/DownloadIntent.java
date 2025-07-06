@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import sftpClient.Client.Client;
 
@@ -22,20 +23,21 @@ public class DownloadIntent extends Intent {
     @Override
     public ArrayList<String> execute(Client client, ArrayList<String> args) {
         parse(args);
-        ArrayList<String> output = new ArrayList<>();
-        files
-                .forEach(filename -> {
-                    File destFile = new File(filename);
+        return files
+                .stream()
+                .map(File::new)
+                .map(file -> {
+                    String result = "Failed to download " + file.getName() + ".";
                     try {
-                        OutputStream dest = new FileOutputStream(destFile);
-                        client.sftp.get(filename, dest);
-                        output.add("Downloaded " + filename + " successfully.");
+                        OutputStream dest = new FileOutputStream(file);
+                        client.sftp.get(file.getName(), dest);
+                        result = "Downloaded " + file.getName() + " successfully.";
                         dest.close();
                     } catch (Exception e) {
-                        destFile.delete();
-                        output.add("Failed to download " + filename + ".");
+                        file.delete();
                     }
-                });
-        return output;
+                    return result;
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }
