@@ -28,5 +28,7 @@
     </orderEntry>
     <orderEntry type="library" name="github.mwiede.dockerjava.docker.java.transport.jsch" level="project" />
     <orderEntry type="library" name="googlecode.json.simple" level="project" />
+    <orderEntry type="library" name="github.stefanbirkner.fake.sftp.server.rule" level="project" />
+    <orderEntry type="library" name="slf4j.simple" level="project" />
   </component>
 </module>
