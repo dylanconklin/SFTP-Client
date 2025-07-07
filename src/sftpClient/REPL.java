@@ -142,6 +142,7 @@ public class REPL {
                 output.add("  lls [local_path]               - List local files and directories");
                 output.add("  lcd <local_path>               - Change local directory");
                 output.add("  lpwd                           - Show current local directory");
+                output.add("  lrn <old_name> <new_name>      - Rename/move local file or directory");
                 output.add("");
                 output.add("General commands:");
                 output.add("  help                           - Show this help message");
@@ -195,6 +196,47 @@ public class REPL {
                         }
                     } catch (Exception e) {
                         output.add("✗ Error changing directory: " + e.getMessage());
+                    }
+                }
+                break;
+
+            case "lrn":
+                if (parts.length < 3) {
+                    output.add("lrn Error: Missing parameters. Usage: lrn <old_name> <new_name>");
+                } else {
+                    String oldName = parts[1];
+                    String newName = parts[2];
+                    output.add("Renaming '" + oldName + "' to '" + newName + "'...");
+
+                    try {
+                        java.io.File oldFile = new java.io.File(oldName);
+                        java.io.File newFile = new java.io.File(newName);
+
+                        if (!oldFile.exists()) {
+                            output.add("✗ Source file/directory does not exist: " + oldName);
+                        } else if (newFile.exists()) {
+                            output.add("✗ Destination already exists: " + newName);
+                        } else {
+                            // Create parent directories if they don't exist
+                            java.io.File parentDir = newFile.getParentFile();
+                            if (parentDir != null && !parentDir.exists()) {
+                                parentDir.mkdirs();
+                            }
+
+                            if (oldFile.renameTo(newFile)) {
+                                if (oldFile.isDirectory()) {
+                                    output.add(
+                                            "✓ Successfully renamed directory '" + oldName + "' to '" + newName + "'");
+                                } else {
+                                    output.add("✓ Successfully renamed file '" + oldName + "' to '" + newName + "'");
+                                }
+                            } else {
+                                output.add("✗ Failed to rename '" + oldName + "' to '" + newName + "'");
+                                output.add("  (This may be due to file permissions or cross-device rename)");
+                            }
+                        }
+                    } catch (Exception e) {
+                        output.add("✗ Error renaming file: " + e.getMessage());
                     }
                 }
                 break;
