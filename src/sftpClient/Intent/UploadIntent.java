@@ -2,8 +2,6 @@ package sftpClient.Intent;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -32,7 +30,6 @@ public class UploadIntent extends Intent {
                     try (FileInputStream dest = new FileInputStream(file)) {
                         client.sftp.put(dest, file.getName());
                         result = "Uploaded " + file.getName() + " successfully.";
-                        dest.close();
                     } catch (Exception e) {
                         result = "Failed to upload " + file.getName() + ": " + e.getMessage();
                     }

@@ -5,7 +5,9 @@ import sftpClient.Client.Client;
 
 public abstract class Intent {
     ArrayList<String> args;
+
     abstract void parse(ArrayList<String> args);
+
     abstract public ArrayList<String> execute(Client client, ArrayList<String> args);
 
     public static Intent getIntent(String command) {
@@ -26,6 +28,14 @@ public abstract class Intent {
 
             case "rm":
                 intent = new DeleteIntent();
+                break;
+
+            case "exit":
+                intent = new ExitIntent();
+                break;
+
+            case "quit":
+                intent = new ExitIntent();
                 break;
 
             default:
