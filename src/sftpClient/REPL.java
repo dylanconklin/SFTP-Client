@@ -1,17 +1,21 @@
 package sftpClient;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import sftpClient.Client.Client;
 import sftpClient.CredentialManager.CredentialManager;
 import sftpClient.CredentialManager.Credentials;
 import sftpClient.IO.IO;
 import sftpClient.Intent.Intent;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class REPL {
     Credentials credentials;
     Client client;
+    private Timer inactivityTimer;
+    private static final long TIMEOUT_MS = 300_000; // 5 minute timeout
 
     REPL() {
         this.credentials = CredentialManager.getLoginCredentials(CredentialManager.credentialFile());
@@ -21,12 +25,20 @@ public class REPL {
     public void repl() {
         String input = "";
         ArrayList<String> output = new ArrayList<>();
+        resetInactivityTimer();
+
         while (!Objects.equals(input, "quit") && !Objects.equals(input, "exit")) {
-            input = read();
-            output = eval(input);
-            print(output);
+            try {
+                input = read();
+                resetInactivityTimer();
+                output = eval(input);
+                print(output);
+            } catch (Exception e) {
+                System.out.println("Error reading input: " + e.getMessage());
+            }
         }
-        this.client.disconnect();
+
+        shutdown();
     }
 
     public String read() {
@@ -42,5 +54,30 @@ public class REPL {
 
     public void print(ArrayList<String> output) {
         output.forEach(System.out::println);
+    }
+
+    private void resetInactivityTimer() {
+        if (inactivityTimer != null) {
+            inactivityTimer.cancel();
+        }
+
+        inactivityTimer = new Timer(true);
+        inactivityTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("\nInactivity timeout. Disconnecting...");
+                shutdown();
+                System.exit(0);
+            }
+        }, TIMEOUT_MS);
+    }
+
+    private void shutdown() {
+        if (client != null) {
+            client.disconnect();
+        }
+        if (inactivityTimer != null) {
+            inactivityTimer.cancel();
+        }
     }
 }

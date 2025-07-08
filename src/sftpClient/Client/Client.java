@@ -25,13 +25,25 @@ public class Client {
             this.channel = this.session.openChannel("sftp");
             this.channel.connect();
             this.sftp = (ChannelSftp) this.channel;
+            System.out.println("Connected successfully to " + this.credentials.host);
         } catch (Exception e) {
+
         }
     }
 
     public void disconnect() {
-        this.sftp.disconnect();
-        this.channel.disconnect();
-        this.session.disconnect();
+        try {
+            if (this.sftp != null && this.sftp.isConnected()) {
+                this.sftp.disconnect();
+            }
+            if (this.channel != null && this.channel.isConnected()) {
+                this.channel.disconnect();
+            }
+            if (this.session != null && this.session.isConnected()) {
+                this.session.disconnect();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
