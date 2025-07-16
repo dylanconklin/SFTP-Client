@@ -38,6 +38,14 @@ public abstract class Intent {
                 intent = new ExitIntent();
                 break;
 
+            case "lsearch":
+                intent = new LocalSearchIntent();
+                break;
+
+            case "help":
+                intent = new HelpIntent();
+                break;
+
             default:
                 output.add("Unknown Command: " + command);
         }
