@@ -2,6 +2,9 @@ package sftpClient.Client;
 
 import com.jcraft.jsch.*;
 import sftpClient.CredentialManager.Credentials;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 public class Client {
     Credentials credentials;
@@ -11,6 +14,8 @@ public class Client {
 
     public Client(Credentials credentials) {
         this.credentials = credentials;
+        System.out.println(".... Attempting to connect with: ");
+        System.out.println(credentials);
         connect();
     }
 
@@ -27,7 +32,7 @@ public class Client {
             this.sftp = (ChannelSftp) this.channel;
             System.out.println("Connected successfully to " + this.credentials.host);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -45,5 +50,21 @@ public class Client {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
+    public List<String> listFiles(String path) {
+        List<String> files = new ArrayList<>();
+        try {
+            Vector<ChannelSftp.LsEntry> entries = sftp.ls(path);
+            for (ChannelSftp.LsEntry entry : entries) {
+                if (!entry.getAttrs().isDir()) {
+                    files.add(entry.getFilename());
+                }
+            }
+        } catch (SftpException e) {
+            files.add(" Failed to list files: " + e.getMessage());
+        }
+        return files;
+    }
+
 }

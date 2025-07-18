@@ -31,11 +31,12 @@ public abstract class Intent {
                 break;
 
             case "exit":
+            case "quit":
                 intent = new ExitIntent();
                 break;
 
-            case "quit":
-                intent = new ExitIntent();
+            case "search":
+                intent = new SearchIntent();
                 break;
 
             default:
