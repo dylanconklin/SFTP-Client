@@ -66,5 +66,29 @@ public class Client {
         }
         return files;
     }
+    public List<String> listFilesRecursive(String path, int depth) {
 
+        List<String> results = new ArrayList<>();
+        if (depth < 0) return results;
+        try {
+            Vector<ChannelSftp.LsEntry> entries = sftp.ls(path);
+            for (ChannelSftp.LsEntry entry : entries) {
+                String name = entry.getFilename();
+                if (name.equals(".") || name.equals("..")) continue;
+
+                String fullPath = path.endsWith("/") ? path + name : path + "/" + name;
+
+                if (entry.getAttrs().isDir()) {
+                    // Recurse into subdirectory
+                    results.addAll(listFilesRecursive(fullPath,depth -1));
+                } else {
+                    results.add(fullPath); // full path of file
+                }
+            }
+        } catch (SftpException e) {
+            System.out.println("Failed to list files at " + path + ": " + e.getMessage());
+        }
+
+        return results;
+    }
 }
