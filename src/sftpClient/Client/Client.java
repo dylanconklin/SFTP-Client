@@ -2,6 +2,8 @@ package sftpClient.Client;
 
 import com.jcraft.jsch.*;
 import sftpClient.CredentialManager.Credentials;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -62,7 +64,7 @@ public class Client {
                 }
             }
         } catch (SftpException e) {
-            files.add(" Failed to list files: " + e.getMessage());
+            files.add("Failed to list files: " + e.getMessage());
         }
         return files;
     }
@@ -90,5 +92,41 @@ public class Client {
         }
 
         return results;
+    }
+
+    public void copyDirectory(String srcDir, String destDir) throws SftpException {
+        Vector<ChannelSftp.LsEntry> files = sftp.ls(srcDir);
+
+        // Safely create destination directory if it doesn't exist
+        try {
+            sftp.mkdir(destDir);
+        } catch (SftpException e) {
+            if (e.id != ChannelSftp.SSH_FX_FAILURE) {
+                System.out.println("Failed to create directory " + destDir + ": " + e.getMessage());
+                throw e;
+            }
+            // else: directory already exists, safe to ignore
+        }
+
+        for (ChannelSftp.LsEntry entry : files) {
+            String name = entry.getFilename();
+            if (name.equals(".") || name.equals("..")) continue;
+
+            String srcPath = srcDir.endsWith("/") ? srcDir + name : srcDir + "/" + name;
+            String destPath = destDir.endsWith("/") ? destDir + name : destDir + "/" + name;
+
+            if (entry.getAttrs().isDir()) {
+                // Recursively copy subdirectory
+                copyDirectory(srcPath, destPath);
+            } else {
+                // Copy file with safe resource handling
+                try (InputStream input = sftp.get(srcPath)) {
+                    sftp.put(input, destPath);
+                    System.out.println("Copied file: " + srcPath + " → " + destPath);
+                } catch (Exception ex) {
+                    System.out.println("Failed to copy file " + srcPath + ": " + ex.getMessage());
+                }
+            }
+        }
     }
 }

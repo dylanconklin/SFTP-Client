@@ -38,7 +38,9 @@ public abstract class Intent {
             case "search":
                 intent = new SearchIntent();
                 break;
-
+            case "cpdir":
+                intent = new CopyDirectoryIntent();
+                break;
             default:
                 output.add("Unknown Command: " + command);
         }
