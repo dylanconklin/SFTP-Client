@@ -129,4 +129,25 @@ public class Client {
             }
         }
     }
+    public void deleteDirectory(String path) throws SftpException {
+        Vector<ChannelSftp.LsEntry> files = sftp.ls(path);
+
+        for (ChannelSftp.LsEntry entry : files) {
+            String name = entry.getFilename();
+            if (name.equals(".") || name.equals("..")) continue;
+
+            String fullPath = path + "/" + name;
+            if (entry.getAttrs().isDir()) {
+                // recursively delete
+                deleteDirectory(fullPath);
+            } else {
+                sftp.rm(fullPath);
+                System.out.println("Deleted file: " + fullPath);
+            }
+        }
+
+        // delete the empty directory after contents are deleted
+        sftp.rmdir(path);
+    }
+
 }

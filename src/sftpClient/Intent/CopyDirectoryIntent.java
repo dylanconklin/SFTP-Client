@@ -7,7 +7,7 @@ public class CopyDirectoryIntent extends Intent {
 
     @Override
     public void parse(ArrayList<String> args) {
-        System.out.println(" Raw args before parse: " + args);
+        //System.out.println(" Raw args before parse: " + args);
         if (args.get(0).equalsIgnoreCase("cpdir")) {
             args.remove(0);
         }

@@ -41,6 +41,9 @@ public abstract class Intent {
             case "cpdir":
                 intent = new CopyDirectoryIntent();
                 break;
+            case "rmdir":
+                intent = new DeleteDirectoryIntent();
+                break;
             default:
                 output.add("Unknown Command: " + command);
         }
