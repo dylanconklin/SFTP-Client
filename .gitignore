@@ -30,3 +30,7 @@ bin/
 
 ### Credential Files ###
 login.cred
+
+# Java class files
+*.class
+

@@ -34,6 +34,7 @@ public class Credentials {
     }
 
     static Credentials fromJSON(String json) throws Exception {
+        System.out.println("Loading credentials JSON:\n" + json);
         JSONObject jo = (JSONObject) new JSONParser().parse(json);
         return new Credentials(
                 (String) jo.get("host"),

@@ -27,10 +27,12 @@ public class UploadIntent extends Intent {
                 .map(File::new)
                 .map(file -> {
                     String result = "Failed to upload " + file.getName() + ".";
-                    try {
-                        client.sftp.put(new FileInputStream(file), file.getName());
+                    try (FileInputStream dest = new FileInputStream(file)) {
+                        client.sftp.put(dest, file.getName());
                         result = "Uploaded " + file.getName() + " successfully.";
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                        result = "Failed to upload " + file.getName() + ": " + e.getMessage();
+                    }
                     return result;
                 })
                 .collect(Collectors.toCollection(ArrayList::new));

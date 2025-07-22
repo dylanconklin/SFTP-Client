@@ -31,21 +31,30 @@ public abstract class Intent {
                 break;
 
             case "exit":
-                intent = new ExitIntent();
-                break;
-
             case "quit":
                 intent = new ExitIntent();
                 break;
-
+   
             case "lsearch":
                 intent = new LocalSearchIntent();
                 break;
-
+            
             case "help":
                 intent = new HelpIntent();
                 break;
-
+            
+            case "search":
+                intent = new SearchIntent();
+                break;
+            
+            case "cpdir":
+                intent = new CopyDirectoryIntent();
+                break;
+            
+            case "rmdir":
+                intent = new DeleteDirectoryIntent();
+                break;
+            
             default:
                 output.add("Unknown Command: " + command);
         }
