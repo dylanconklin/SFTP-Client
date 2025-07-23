@@ -31,6 +31,9 @@ bin/
 ### Credential Files ###
 login.cred
 
+### Log History files
+sftp-user.log
+
 # Java class files
 *.class
 

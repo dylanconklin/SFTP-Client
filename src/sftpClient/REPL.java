@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 import sftpClient.Client.Client;
 import sftpClient.CredentialManager.CredentialManager;
 import sftpClient.CredentialManager.Credentials;
@@ -16,6 +17,7 @@ public class REPL {
     Client client;
     private Timer inactivityTimer;
     private static final long TIMEOUT_MS = 300_000; // 5 minute timeout
+    private static final Logger logger = Logger.getLogger(REPL.class.getName());
 
     REPL() {
         this.credentials = CredentialManager.getLoginCredentials(CredentialManager.credentialFile());
@@ -35,6 +37,7 @@ public class REPL {
                 print(output);
             } catch (Exception e) {
                 System.out.println("Error reading input: " + e.getMessage());
+                logger.info("Error reading input: " + e.getMessage());
             }
         }
 
@@ -66,6 +69,7 @@ public class REPL {
             @Override
             public void run() {
                 System.out.println("\nInactivity timeout. Disconnecting...");
+                logger.info("\nInactivity timeout. Disconnecting...");
                 shutdown();
                 System.exit(0);
             }
