@@ -50,6 +50,10 @@ public abstract class Intent {
             case "cpdir":
                 intent = new CopyDirectoryIntent();
                 break;
+
+            case "cd":
+                intent = new ChangeDirectoryIntent();
+                break;
             
             case "rmdir":
                 intent = new DeleteDirectoryIntent();
