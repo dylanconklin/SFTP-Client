@@ -153,5 +153,16 @@ public class Client {
         // delete the empty directory after contents are deleted
         sftp.rmdir(path);
     }
+    public boolean changeDirectory(String path) {
+        //System.out.println(" Raw args before parse: " + path);
+        try {
+            sftp.cd(path);
+            return true;
+        } catch (SftpException e) {
+            System.out.println("Failed to change directory: " + e.getMessage());
+            return false;
+        }
+    }
+
 
 }
