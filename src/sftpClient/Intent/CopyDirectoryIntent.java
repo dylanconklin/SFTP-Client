@@ -1,9 +1,11 @@
 package sftpClient.Intent;
-
+import java.util.logging.Logger;
 import sftpClient.Client.Client;
 import java.util.ArrayList;
 
+
 public class CopyDirectoryIntent extends Intent {
+    private static final Logger logger = Logger.getLogger(CopyDirectoryIntent.class.getName());
 
     @Override
     public void parse(ArrayList<String> args) {
@@ -34,8 +36,10 @@ public class CopyDirectoryIntent extends Intent {
         try {
             client.copyDirectory(src, dest);
             result.add("Success: Copied directory from `" + src + "` to `" + dest + "`");
+            logger.info("Success: Copied directory from `" + src + "` to `" + dest + "`");
         } catch (Exception e) {
             result.add("Failed: " + e.getMessage());
+            logger.warning("Failed: " + e.getMessage());
         }
         return result;
     }

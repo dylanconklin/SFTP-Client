@@ -1,12 +1,14 @@
 package sftpClient.Intent;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import sftpClient.Client.Client;
 
 /**
  * Intent for displaying help information about available commands
  */
 public class HelpIntent extends Intent {
+    private static final Logger logger = Logger.getLogger(HelpIntent.class.getName());
 
     @Override
     void parse(ArrayList<String> args) {
@@ -49,7 +51,7 @@ public class HelpIntent extends Intent {
         output.add("  lsearch -ext txt                 - Find all .txt files");
         output.add("  lsearch -size +1M                - Find files larger than 1MB");
         output.add("  lsearch -name \"test*\" -case      - Case-sensitive search for files starting with 'test'");
-
+        
         return output;
     }
 }

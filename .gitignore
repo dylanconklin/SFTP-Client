@@ -33,6 +33,7 @@ login.cred
 
 ### Log History files
 sftp-user.log
+sftp-user.log.lck
 
 # Java class files
 *.class
