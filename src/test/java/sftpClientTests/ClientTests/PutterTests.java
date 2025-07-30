@@ -26,6 +26,7 @@ public class PutterTests {
     public void setUp() {
         sftpServer.addUser(username, password);
         credentials = new Credentials(hostname, sftpServer.getPort(), username, password);
+        client = new Client(credentials);
     }
 
     @Test
