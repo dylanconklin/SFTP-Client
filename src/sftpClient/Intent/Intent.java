@@ -58,7 +58,10 @@ public abstract class Intent {
             case "rmdir":
                 intent = new DeleteDirectoryIntent();
                 break;
-            
+
+            case "rename":
+                intent = new RenameIntent();
+                break;
             default:
                 output.add("Unknown Command: " + command);
         }
