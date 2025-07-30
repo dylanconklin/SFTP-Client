@@ -26,15 +26,12 @@ public class DeleteIntent extends Intent {
         ArrayList<String> output = new ArrayList<>();
 
         try {
-            System.out.println("Working in " + client.sftp.pwd());
-            System.out.println("1");
             ArrayList<ChannelSftp.LsEntry> filesAndDirectories = new ArrayList<>(client.sftp
                     .ls(client.sftp.pwd())
                     .stream()
                     .filter(e -> files.contains(e.getFilename()))
                     .toList());
 
-            System.out.println("2");
             // Delete Content in Non-Empty Directories
             filesAndDirectories
                     .stream()
@@ -78,7 +75,6 @@ public class DeleteIntent extends Intent {
                         }
                     });
 
-            System.out.println("3");
             // Delete Directories and Files
             output.addAll(
                     filesAndDirectories
@@ -93,20 +89,17 @@ public class DeleteIntent extends Intent {
                                     } else {
                                         client.sftp.rm(filepath);
                                     }
-                                    result = "Successfully deleted " + filename + ".";
+                                    result = "Deleted " + filename + " successfully.";
                                 } catch (SftpException ex) {
                                 }
                                 return result;
                             })
                             .toList()
             );
-            System.out.println("4");
         } catch (Exception e) {
-            System.out.println("Error");
-            System.out.println(e.getMessage());
+            output.add("Error deleting files.");
         }
 
-        System.out.println("5");
         return output;
     }
 }
