@@ -1,10 +1,11 @@
 package sftpClient.Intent;
 
+import java.util.ArrayList;
+import java.util.logging.Logger;
 import sftpClient.Client.Client;
 
-import java.util.ArrayList;
-
 public class ExitIntent extends Intent {
+    private static final Logger logger = Logger.getLogger(ExitIntent.class.getName());
     @Override
     void parse(ArrayList<String> args) {
     }

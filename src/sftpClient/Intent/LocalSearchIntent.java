@@ -8,9 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-
 import sftpClient.Client.Client;
 
 /**
@@ -22,6 +22,7 @@ import sftpClient.Client.Client;
  * - lsearch -size <size> [path] : Search by file size (e.g., +1M, -500K)
  */
 public class LocalSearchIntent extends Intent {
+    private static final Logger logger = Logger.getLogger(LocalSearchIntent.class.getName());
 
     private String searchMode = "name"; // Default search mode
     private String searchPattern = "";
@@ -118,6 +119,7 @@ public class LocalSearchIntent extends Intent {
         File searchDir = new File(searchPath);
         if (!searchDir.exists()) {
             output.add("Error: Search path does not exist: " + searchPath);
+            logger.warning("Error: Search path does not exist: " + searchPath);
             return output;
         }
 
@@ -131,9 +133,12 @@ public class LocalSearchIntent extends Intent {
 
             if (results.isEmpty()) {
                 output.add("No files found matching the search criteria.");
+                logger.warning("No files found matching the search criteria.");
+                
             } else {
                 output.add("Found " + results.size() + " result(s):");
                 output.add("");
+                logger.info("Found " + results.size() + " result(s):");
 
                 for (File file : results) {
                     formatSearchResult(file, output);
@@ -142,6 +147,7 @@ public class LocalSearchIntent extends Intent {
 
         } catch (Exception e) {
             output.add("Error during search: " + e.getMessage());
+            logger.warning("Error during search: " + e.getMessage());
         }
 
         return output;

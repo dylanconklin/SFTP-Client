@@ -2,8 +2,11 @@ package sftpClient.Intent;
 
 import sftpClient.Client.Client;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class DeleteDirectoryIntent extends Intent {
+    private static final Logger logger = Logger.getLogger(DeleteDirectoryIntent.class.getName());
+
     @Override
     public void parse(ArrayList<String> args) {
         //System.out.println(" Raw args before parse: " + args);
@@ -25,8 +28,10 @@ public class DeleteDirectoryIntent extends Intent {
         try {
             client.deleteDirectory(target);
             result.add("Successfully deleted directory: " + target);
+            logger.info("Successfully deleted directory: " + target);
         } catch (Exception e) {
             result.add("Failed to delete directory: " + e.getMessage());
+            logger.warning("Failed to delete directory: " + e.getMessage());
         }
         return result;
     }

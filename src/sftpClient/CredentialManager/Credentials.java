@@ -21,7 +21,7 @@ public class Credentials {
                 "Host: " + host + "\n" +
                 "Port: " + port + "\n" +
                 "Username: " + username + "\n" +
-                "Password: " + password + "\n" +
+                //"Password: " + password + "\n" +
                 "-----------------";
     }
     public String toJSON() {

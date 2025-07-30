@@ -1,6 +1,7 @@
 package sftpClient.Client;
 
 import com.jcraft.jsch.*;
+import java.util.logging.Logger;
 import sftpClient.CredentialManager.Credentials;
 
 import java.io.InputStream;
@@ -13,6 +14,7 @@ public class Client {
     public Session session;
     public Channel channel;
     public ChannelSftp sftp;
+    private static final Logger logger = Logger.getLogger(Client.class.getName());
 
     public Client(Credentials credentials) {
         this.credentials = credentials;
@@ -22,6 +24,7 @@ public class Client {
     }
 
     public void connect() {
+        logger.info("Connecting to " + credentials.host + ":" + credentials.port);
         JSch jsch = new JSch();
         try {
             this.session = jsch.getSession(this.credentials.username, this.credentials.host, this.credentials.port);
@@ -33,6 +36,7 @@ public class Client {
             this.channel.connect();
             this.sftp = (ChannelSftp) this.channel;
             System.out.println("Connected successfully to " + this.credentials.host);
+            logger.info("Connected successfully to " + this.credentials.host);
         } catch (Exception e) {
             e.printStackTrace();
         }

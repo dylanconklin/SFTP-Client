@@ -1,9 +1,11 @@
 package sftpClient.Intent;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import sftpClient.Client.Client;
 
 public class ChangeDirectoryIntent extends Intent {
+    private static final Logger logger = Logger.getLogger(ChangeDirectoryIntent.class.getName());
     @Override
     public void parse(ArrayList<String> args) {
         this.args = args;
@@ -15,6 +17,7 @@ public class ChangeDirectoryIntent extends Intent {
         ArrayList<String> output = new ArrayList<>();
         if (args.size() < 2) {
             output.add("Usage: cd <directory>");
+            logger.info("Usage: cd <directory>");
             return output;
         }
 
@@ -22,8 +25,10 @@ public class ChangeDirectoryIntent extends Intent {
         boolean success = client.changeDirectory(newDir);
         if (success) {
             output.add("Changed directory to: " + newDir);
+            logger.info("Changed directory to: " + newDir);
         } else {
             output.add("Failed to change directory to: " + newDir);
+            logger.warning("Failed to change directory to: " + newDir);
         }
 
         return output;
