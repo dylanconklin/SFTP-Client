@@ -62,6 +62,11 @@ public abstract class Intent {
             case "rename":
                 intent = new RenameIntent();
                 break;
+
+            case "mkdir":
+                intent = new CreateDirectoryIntent();
+                break;
+                
             default:
                 output.add("Unknown Command: " + command);
         }

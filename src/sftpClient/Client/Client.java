@@ -133,6 +133,18 @@ public class Client {
             }
         }
     }
+
+    public void createDirectory(String newDir) throws SftpException {
+        try {
+            sftp.mkdir(newDir);
+            logger.info("New directory " + newDir + " created");
+        } catch (SftpException e) {
+            logger.info("Failure creating new directory " + newDir);
+        }
+            
+    }
+
+
     public void deleteDirectory(String path) throws SftpException {
         Vector<ChannelSftp.LsEntry> files = sftp.ls(path);
 
