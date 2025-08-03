@@ -37,6 +37,7 @@ public class GetterTests {
         }
 
         credentials = new Credentials(hostname, sftpServer.getPort(), username, password);
+        client = new Client(credentials);
     }
 
     @Test
