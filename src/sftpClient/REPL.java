@@ -26,15 +26,12 @@ public class REPL {
 
     public void repl() {
         String input = "";
-        ArrayList<String> output = new ArrayList<>();
-        resetInactivityTimer();
 
         while (!Objects.equals(input, "quit") && !Objects.equals(input, "exit")) {
             try {
                 input = read();
                 resetInactivityTimer();
-                output = eval(input);
-                print(output);
+                print(eval(input));
             } catch (Exception e) {
                 System.out.println("Error reading input: " + e.getMessage());
                 logger.info("Error reading input: " + e.getMessage());
