@@ -30,6 +30,14 @@ public abstract class Intent {
                 intent = new DeleteIntent();
                 break;
 
+            case "mkdir":
+                intent = new CreateDirectoryIntent();
+                break;
+
+            case "lpwd":
+                intent = new LocalPrintWorkingDirectoryIntent();
+                break;
+
             case "exit":
                 intent = new ExitIntent();
                 break;
@@ -40,6 +48,8 @@ public abstract class Intent {
 
             default:
                 output.add("Unknown Command: " + command);
+                // intent = new UnknownCommandIntent();
+                break;
         }
         return intent;
     }
