@@ -30,7 +30,7 @@ public class Client {
             this.session = jsch.getSession(this.credentials.username, this.credentials.host, this.credentials.port);
             this.session.setPassword(credentials.password);
             this.session.setConfig("StrictHostKeyChecking", "no");
-            this.session.setConfig("server_host_key", "ssh-rsa");
+//            this.session.setConfig("server_host_key", "ssh-rsa");
 
             this.session.connect();
             this.channel = this.session.openChannel("sftp");
