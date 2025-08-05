@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class LoggerConfig {
-    private static final String LOG_FILE = "sftp-user.log";
+    private static final String LOG_FILE = "User-History.log";
     private static boolean isConfigured = false;
 
     public static void setup() {
@@ -21,6 +21,12 @@ public class LoggerConfig {
                 logger.addHandler(fileHandler);
             } catch (IOException e) {
                 System.err.println("Failed to set up log file handler: " + e.getMessage());
+            }
+
+            for (var handler : logger.getHandlers()) {
+                if (handler.getClass().getName().contains("ConsoleHandler")) {
+                    logger.removeHandler(handler);
+                }
             }
 
             isConfigured = true;

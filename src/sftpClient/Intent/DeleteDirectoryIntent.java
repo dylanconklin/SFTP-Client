@@ -9,7 +9,6 @@ public class DeleteDirectoryIntent extends Intent {
 
     @Override
     public void parse(ArrayList<String> args) {
-        //System.out.println(" Raw args before parse: " + args);
         if (args.get(0).equalsIgnoreCase("rmdir")) {
             args.remove(0);
         }
@@ -20,18 +19,14 @@ public class DeleteDirectoryIntent extends Intent {
 
     @Override
     public ArrayList<String> execute(Client client, ArrayList<String> args) {
-        //System.out.println(" Raw args before parse: " + args);
         parse(args);
-        //System.out.println(" Raw args before parse: " + args);
         String target = args.get(0);
         ArrayList<String> result = new ArrayList<>();
         try {
             client.deleteDirectory(target);
             result.add("Successfully deleted directory: " + target);
-            logger.info("Successfully deleted directory: " + target);
         } catch (Exception e) {
             result.add("Failed to delete directory: " + e.getMessage());
-            logger.warning("Failed to delete directory: " + e.getMessage());
         }
         return result;
     }

@@ -2,11 +2,13 @@ package sftpClient.Intent;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import com.jcraft.jsch.ChannelSftp;
 import sftpClient.Client.Client;
 
 public class ListIntent extends Intent {
+    private static final Logger logger = Logger.getLogger(CreateDirectoryIntent.class.getName());
     @Override
     void parse(ArrayList<String> args) {
     }
@@ -59,7 +61,7 @@ public class ListIntent extends Intent {
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-
+        logger.info(output.toString());
         return output
                 .stream()
                 .map((e) -> e.getFilename() + (e.getAttrs().isDir() ? "/" : ""))

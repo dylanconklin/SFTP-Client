@@ -25,6 +25,7 @@ public class RenameIntent extends Intent {
         ArrayList<String> output = new ArrayList<>();
         if (args.size() < 2) {
             output.add("Usage: rename <old_filename> <new_filename>");
+            logger.info(output.toString());
             return output;
         }
 
@@ -37,9 +38,9 @@ public class RenameIntent extends Intent {
             logger.info("Successfully renamed " + oldName + " to " + newName);
         } catch (SftpException e) {
             output.add("Failed to rename file: " + e.getMessage());
-            logger.warning("Failed to rename " + oldName + ": " + e.getMessage());
+            logger.info("Failed to rename " + oldName + ": " + e.getMessage());
         }
-
+        logger.info(output.toString());
         return output;
     }
 }
