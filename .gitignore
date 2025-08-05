@@ -32,8 +32,8 @@ bin/
 login.cred
 
 ### Log History files
-sftp-user.log
-sftp-user.log.lck
+User-History.log
+User-History.log.lck
 
 # Java class files
 *.class

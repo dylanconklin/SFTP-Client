@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 import sftpClient.Client.Client;
 
+
 public class CreateDirectoryIntent extends Intent {
     private static final Logger logger = Logger.getLogger(CreateDirectoryIntent.class.getName());
     @Override
@@ -12,7 +13,7 @@ public class CreateDirectoryIntent extends Intent {
                 args.remove(0);
             }
 
-            if (args.size() != 1) {
+            if (args.size() != 1 || args.get(0).trim().isEmpty()) {
                 throw new IllegalArgumentException("Usage: mkdir <remoteDirectory>");
             }
         }
@@ -28,9 +29,9 @@ public class CreateDirectoryIntent extends Intent {
             client.createDirectory(newDir);
             result.add("Success: Created directory " + newDir);
         } catch (Exception e) {
-            result.add("Failed: " + e.getMessage());
-            logger.warning(result.toString());
+            result.add("Failed: Directory not created" + e.getMessage());
         }
+        logger.info(result.toString());
         return result;
     }
 }

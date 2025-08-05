@@ -17,7 +17,7 @@ public class ChangeDirectoryIntent extends Intent {
         ArrayList<String> output = new ArrayList<>();
         if (args.size() < 2) {
             output.add("Usage: cd <directory>");
-            logger.info("Usage: cd <directory>");
+            logger.info(output.toString());
             return output;
         }
 
@@ -25,12 +25,10 @@ public class ChangeDirectoryIntent extends Intent {
         boolean success = client.changeDirectory(newDir);
         if (success) {
             output.add("Changed directory to: " + newDir);
-            logger.info("Changed directory to: " + newDir);
         } else {
             output.add("Failed to change directory to: " + newDir);
-            logger.warning("Failed to change directory to: " + newDir);
         }
-
+        logger.info(output.toString());
         return output;
     }
 }

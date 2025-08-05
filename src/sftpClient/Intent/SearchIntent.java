@@ -23,31 +23,28 @@ public class SearchIntent extends Intent {
 
     @Override
     public ArrayList<String> execute(Client client, ArrayList<String> args) {
-        System.out.println(" Raw args before parse: " + args);
-        logger.info("Executing search with raw args: " + args);
 
         parse(args);
 
-        System.out.println(" Raw args AFTER parse: " + args);
-        logger.info("Parsed args: " + args);
+        System.out.println("Searching for " + args);
 
         ArrayList<String> output = new ArrayList<>();
 
         if (args.isEmpty()) {
             String msg = " Please provide a search keyword.";
             System.out.println(msg);
-            logger.info(msg);
             output.add(msg);
+            logger.info(output.toString());
             return output;
         }
 
         String pattern = args.get(0);
-        System.out.println(" Searching Please Wait!! ........");
-        logger.info("Starting recursive file listing for search pattern: " + pattern);
+        logger.info("Searching Please Wait!! ........");
+        System.out.println("Searching Please Wait!! ........");
 
         List<String> files = client.listFilesRecursive(".", 4);
-        // System.out.println(" Rfile : " + files); // Uncomment if needed for debugging
         logger.info("Total files found: " + files.size());
+        System.out.println("\n\nTotal files found: " + files.size());
 
         List<String> matched;
 
@@ -64,18 +61,14 @@ public class SearchIntent extends Intent {
 
         if (matched.isEmpty()) {
             String msg = "No files found matching: " + pattern;
-            System.out.println(msg);
-            logger.info(msg);
             output.add(msg);
         } else {
             String msg = "Found " + matched.size() + " file(s):";
-            System.out.println(msg);
-            logger.info(msg);
             output.add(msg);
             matched.forEach(System.out::println);
             output.addAll(matched);
         }
-
+        logger.info(output.toString());
         return output;
     }
 }
