@@ -42,6 +42,10 @@ public abstract class Intent {
                 intent = new LocalListIntent();
                 break;
 
+            case "lcd":
+                intent = new LocalChangeDirectoryIntent();
+                break;
+
             case "exit":
             case "quit":
                 intent = new ExitIntent();
