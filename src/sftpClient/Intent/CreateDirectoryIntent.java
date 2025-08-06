@@ -6,18 +6,18 @@ import sftpClient.Client.Client;
 
 public class CreateDirectoryIntent extends Intent {
     private static final Logger logger = Logger.getLogger(CreateDirectoryIntent.class.getName());
-    
+
     private boolean createParents = false;
     private boolean verbose = false;
     private String directoryPath = "";
-    
+
     @Override
     public void parse(ArrayList<String> args) {
         // Reset flags
         createParents = false;
         verbose = false;
         directoryPath = "";
-        
+
         // Remove command name if present
         if (!args.isEmpty() && args.get(0).equalsIgnoreCase("mkdir")) {
             args.remove(0);
@@ -26,7 +26,7 @@ public class CreateDirectoryIntent extends Intent {
         // Parse flags and directory path
         for (int i = 0; i < args.size(); i++) {
             String arg = args.get(i);
-            
+
             if (arg.startsWith("-")) {
                 // Handle flags
                 if (arg.equals("-p") || arg.equals("--parents")) {
@@ -48,7 +48,7 @@ public class CreateDirectoryIntent extends Intent {
                 }
             }
         }
-        
+
         if (directoryPath.isEmpty()) {
             throw new IllegalArgumentException("Directory path is required");
         }
@@ -57,11 +57,11 @@ public class CreateDirectoryIntent extends Intent {
     @Override
     public ArrayList<String> execute(Client client, ArrayList<String> args) {
         ArrayList<String> result = new ArrayList<>();
-        
+
         try {
             // Parse arguments
             parse(args);
-            
+
             // If no client provided (testing mode)
             if (client == null) {
                 result.add("mkdir command parsed successfully:");
@@ -72,14 +72,14 @@ public class CreateDirectoryIntent extends Intent {
                 logger.info("mkdir test mode: " + result.toString());
                 return result;
             }
-            
+
             // Create directory based on flags
             if (createParents) {
                 createDirectoryWithParents(client, directoryPath, result);
             } else {
                 createSingleDirectory(client, directoryPath, result);
             }
-            
+
         } catch (IllegalArgumentException e) {
             result.add("Error: " + e.getMessage());
             result.add("Usage: mkdir [-p] [-v] <directory>");
@@ -90,11 +90,11 @@ public class CreateDirectoryIntent extends Intent {
             result.add("Error creating directory: " + e.getMessage());
             logger.severe("mkdir execution error: " + e.getMessage());
         }
-        
+
         logger.info("mkdir result: " + result.toString());
         return result;
     }
-    
+
     /**
      * Create a single directory using existing client method
      */
@@ -103,8 +103,6 @@ public class CreateDirectoryIntent extends Intent {
             client.createDirectory(path);
             if (verbose) {
                 result.add("Created directory: " + path);
-            } else {
-                result.add("Success: Created directory " + path);
             }
             logger.info("Created directory: " + path);
         } catch (Exception e) {
@@ -121,7 +119,7 @@ public class CreateDirectoryIntent extends Intent {
             logger.warning("Failed to create directory " + path + ": " + e.getMessage());
         }
     }
-    
+
     /**
      * Create directory with parent directories as needed
      */
@@ -131,22 +129,22 @@ public class CreateDirectoryIntent extends Intent {
             String[] pathParts = path.split("/");
             String currentPath = "";
             boolean hasCreatedAny = false;
-            
+
             // Handle absolute vs relative paths
             boolean isAbsolute = path.startsWith("/");
             if (isAbsolute) {
                 currentPath = "/";
             }
-            
+
             // Create each directory level
             for (String part : pathParts) {
                 if (part.isEmpty()) continue;
-                
+
                 if (!currentPath.isEmpty() && !currentPath.endsWith("/")) {
                     currentPath += "/";
                 }
                 currentPath += part;
-                
+
                 try {
                     // Try to create the directory using client method
                     client.createDirectory(currentPath);
@@ -168,19 +166,13 @@ public class CreateDirectoryIntent extends Intent {
                     }
                 }
             }
-            
-            if (!verbose) {
-                if (hasCreatedAny) {
-                    result.add("Success: Created directory " + path);
-                } else {
-                    result.add("Directory already exists: " + path);
-                }
+
+            if (!hasCreatedAny) {
+                result.add("Directory already exists: " + path);
             }
-            
         } catch (Exception e) {
             result.add("Error creating directory path: " + e.getMessage());
             logger.severe("Failed to create directory path " + path + ": " + e.getMessage());
         }
     }
 }
-
