@@ -30,7 +30,7 @@ public class LocalListIntent extends Intent {
                 directoryPath = args.get(1);
             } else {
                 // Use current working directory
-                directoryPath = System.getProperty("user.dir");
+                directoryPath = client.sftp.lpwd();
             }
             
             File directory = new File(directoryPath);

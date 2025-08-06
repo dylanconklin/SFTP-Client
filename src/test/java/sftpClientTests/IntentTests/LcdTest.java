@@ -18,7 +18,7 @@ public class LcdTest {
         boolean allTestsPassed = true;
         
         // Store original directory to restore later
-        String originalDirectory = LocalChangeDirectoryIntent.getCurrentLocalDirectory();
+        String originalDirectory = LocalChangeDirectoryIntent.currentLocalDirectory;
         
         try {
             // Test 1: Intent Registration
@@ -47,7 +47,7 @@ public class LcdTest {
             
         } finally {
             // Restore original directory
-            LocalChangeDirectoryIntent.setCurrentLocalDirectory(originalDirectory);
+            LocalChangeDirectoryIntent.currentLocalDirectory = originalDirectory;
         }
         
         // Summary
@@ -101,7 +101,7 @@ public class LcdTest {
         
         try {
             Intent intent = Intent.getIntent("lcd");
-            String currentDir = LocalChangeDirectoryIntent.getCurrentLocalDirectory();
+            String currentDir = LocalChangeDirectoryIntent.currentLocalDirectory;
             
             ArrayList<String> args = new ArrayList<>(Arrays.asList("lcd", ".."));
             ArrayList<String> result = intent.execute(null, args);
@@ -118,7 +118,7 @@ public class LcdTest {
                 return false;
             }
             
-            String newDir = LocalChangeDirectoryIntent.getCurrentLocalDirectory();
+            String newDir = LocalChangeDirectoryIntent.currentLocalDirectory;
             if (newDir.equals(currentDir)) {
                 System.out.println("[FAIL] Directory did not change");
                 return false;
@@ -161,7 +161,7 @@ public class LcdTest {
                 return false;
             }
             
-            String newDir = LocalChangeDirectoryIntent.getCurrentLocalDirectory();
+            String newDir = LocalChangeDirectoryIntent.currentLocalDirectory;
             if (!newDir.equals(new File(tempDir).getCanonicalPath())) {
                 System.out.println("[FAIL] Directory not changed to expected path");
                 System.out.println("Expected: " + new File(tempDir).getCanonicalPath());
@@ -191,7 +191,7 @@ public class LcdTest {
             
             // First change to a known directory (temp)
             String tempDir = System.getProperty("java.io.tmpdir");
-            LocalChangeDirectoryIntent.setCurrentLocalDirectory(tempDir);
+            LocalChangeDirectoryIntent.currentLocalDirectory = tempDir;
             
             // Find a subdirectory in temp to test with
             File tempFile = new File(tempDir);
@@ -272,7 +272,7 @@ public class LcdTest {
             Intent intent = Intent.getIntent("lcd");
             
             // Try to find a file in the current directory to test with
-            File currentDir = new File(LocalChangeDirectoryIntent.getCurrentLocalDirectory());
+            File currentDir = new File(LocalChangeDirectoryIntent.currentLocalDirectory);
             File[] files = currentDir.listFiles();
             String testFilePath = null;
             
@@ -358,7 +358,7 @@ public class LcdTest {
         
         try {
             Intent intent = Intent.getIntent("lcd");
-            String beforeDir = LocalChangeDirectoryIntent.getCurrentLocalDirectory();
+            String beforeDir = LocalChangeDirectoryIntent.currentLocalDirectory;
             
             ArrayList<String> args = new ArrayList<>(Arrays.asList("lcd", "."));
             ArrayList<String> result = intent.execute(null, args);
@@ -375,7 +375,7 @@ public class LcdTest {
                 return false;
             }
             
-            String afterDir = LocalChangeDirectoryIntent.getCurrentLocalDirectory();
+            String afterDir = LocalChangeDirectoryIntent.currentLocalDirectory;
             if (!beforeDir.equals(afterDir)) {
                 System.out.println("[FAIL] Current directory should not change with '.'");
                 System.out.println("Before: " + beforeDir);
