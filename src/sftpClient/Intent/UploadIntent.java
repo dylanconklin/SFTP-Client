@@ -14,10 +14,6 @@ public class UploadIntent extends Intent {
 
     @Override
     void parse(ArrayList<String> args) {
-        ArrayList<String> output = new ArrayList<>();
-        if (args.size() < 2) {
-            output.add("Error: Missing Parameters Like File Names");
-        }
         files = new ArrayList<>(args.subList(1, args.size()));
     }
 
@@ -28,16 +24,17 @@ public class UploadIntent extends Intent {
                 .stream()
                 .map(File::new)
                 .map(file -> {
-                    String result = "Failed to upload " + file.getName() + ".";
+                    boolean successful = true;
                     try (FileInputStream dest = new FileInputStream(file)) {
                         client.sftp.put(dest, file.getName());
-                        result = "Uploaded " + file.getName() + " successfully.";
                     } catch (Exception e) {
-                        result = "Failed to upload " + file.getName() + ": " + e.getMessage();
+                        successful = false;
                     }
+                    String result = successful ? "" : "Failed to upload " + file.getName() + ".";
                     logger.info(result);
                     return result;
                 })
+                .filter(e -> !e.isEmpty())
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 }

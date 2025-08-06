@@ -30,18 +30,20 @@ public class DownloadIntent extends Intent {
                 .stream()
                 .map(File::new)
                 .map(file -> {
-                    String result = "Failed to download " + file.getName() + ".";
+                    boolean successful = true;
                     try {
                         OutputStream dest = new FileOutputStream(file);
                         client.sftp.get(file.getName(), dest);
-                        result = "Downloaded " + file.getName() + " successfully.";
                         dest.close();
                     } catch (Exception e) {
                         file.delete();
+                        successful = false;
                     }
+                    String result = successful ? "" : "Failed to download " + file.getName() + ".";
                     logger.info(result);
                     return result;
                 })
+                .filter(e -> !e.isEmpty())
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 }

@@ -84,8 +84,7 @@ public abstract class Intent {
                 break;
                 
             default:
-                output.add("Unknown Command: " + command);
-                // intent = new UnknownCommandIntent();
+                intent = new UnknownCommandIntent();
                 break;
         }
         return intent;
