@@ -24,7 +24,6 @@ public class DeleteDirectoryIntent extends Intent {
         ArrayList<String> result = new ArrayList<>();
         try {
             client.deleteDirectory(target);
-            result.add("Successfully deleted directory: " + target);
         } catch (Exception e) {
             result.add("Failed to delete directory: " + e.getMessage());
         }

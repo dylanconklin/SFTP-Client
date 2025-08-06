@@ -79,7 +79,7 @@ public abstract class Intent {
                 intent = new DeleteDirectoryIntent();
                 break;
 
-            case "rename":
+            case "rn":
                 intent = new RenameIntent();
                 break;
 

@@ -35,7 +35,6 @@ public class CopyDirectoryIntent extends Intent {
         ArrayList<String> result = new ArrayList<>();
         try {
             client.copyDirectory(src, dest);
-            result.add("Success: Copied directory from `" + src + "` to `" + dest + "`");
         } catch (Exception e) {
             result.add("Failed: " + e.getMessage());
         }

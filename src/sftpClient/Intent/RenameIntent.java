@@ -34,7 +34,6 @@ public class RenameIntent extends Intent {
 
         try {
             client.sftp.rename(oldName, newName);
-            output.add("Renamed " + oldName + " to " + newName);
             logger.info("Successfully renamed " + oldName + " to " + newName);
         } catch (SftpException e) {
             output.add("Failed to rename file: " + e.getMessage());

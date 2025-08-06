@@ -13,7 +13,6 @@ public class ChangeDirectoryIntent extends Intent {
 
     @Override
     public ArrayList<String> execute(Client client, ArrayList<String> args) {
-        //System.out.println(" Raw args before parse: " + args);
         ArrayList<String> output = new ArrayList<>();
         if (args.size() < 2) {
             output.add("Usage: cd <directory>");
@@ -23,9 +22,7 @@ public class ChangeDirectoryIntent extends Intent {
 
         String newDir = args.get(1);
         boolean success = client.changeDirectory(newDir);
-        if (success) {
-            output.add("Changed directory to: " + newDir);
-        } else {
+        if (!success) {
             output.add("Failed to change directory to: " + newDir);
         }
         logger.info(output.toString());
