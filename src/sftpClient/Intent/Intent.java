@@ -38,6 +38,10 @@ public abstract class Intent {
                 intent = new LocalPrintWorkingDirectoryIntent();
                 break;
 
+            case "lls":
+                intent = new LocalListIntent();
+                break;
+
             case "exit":
             case "quit":
                 intent = new ExitIntent();
@@ -69,10 +73,6 @@ public abstract class Intent {
 
             case "rename":
                 intent = new RenameIntent();
-                break;
-
-            case "mkdir":
-                intent = new CreateDirectoryIntent();
                 break;
                 
             default:
