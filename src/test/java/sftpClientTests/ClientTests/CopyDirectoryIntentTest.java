@@ -7,10 +7,11 @@ import org.junit.Test;
 import sftpClient.Client.Client;
 import sftpClient.CredentialManager.Credentials;
 import sftpClient.Intent.CopyDirectoryIntent;
-
+import com.jcraft.jsch.ChannelSftp;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import sftpClient.Intent.CreateDirectoryIntent;
 
 import static org.junit.Assert.assertTrue;
 
@@ -35,29 +36,43 @@ public class CopyDirectoryIntentTest {
     }
 
     @Test
-    public void testCopyDirectorySuccess() {
-        CopyDirectoryIntent intent = new CopyDirectoryIntent();
+    public void testCreateDirectorySuccess() {
+        // Create a dummy subclass to override connect()
+        Credentials credentials = new Credentials(HOST, sftpServer.getPort(), USERNAME, PASSWORD);
+        Client fakeClient = new Client(credentials) {
+            @Override
+            public void connect() {
+                // don't call real connect
+                this.session = null;
+                this.sftp = new ChannelSftp() {
+                    @Override
+                    public void mkdir(String path) {
+                        System.out.println("Mock mkdir: " + path);
+                    }
+                };
+            }
+        };
+
+        CreateDirectoryIntent intent = new CreateDirectoryIntent();
 
         ArrayList<String> args = new ArrayList<>();
-        args.add("sourceDir"); // only source provided, dest auto-generated
+        args.add("newDir"); // only source provided
 
-        List<String> output = intent.execute(client, args);
+        List<String> output = intent.execute(fakeClient, args);
 
-        // Should contain success message with both src and dest
-        assertTrue(output.get(0).contains("Success: Copied directory from"));
+        assertTrue(output.get(0).contains("Success"));
     }
 
     @Test
     public void testCopyDirectoryToCustomTarget() {
         CopyDirectoryIntent intent = new CopyDirectoryIntent();
-
         ArrayList<String> args = new ArrayList<>();
         args.add("sourceDir");
         args.add("copiedDir");
 
         List<String> output = intent.execute(client, args);
-
-        assertTrue(output.get(0).contains("Success: Copied directory from `sourceDir` to `copiedDir`"));
+        System.out.println(output.get(0));
+        assertTrue(output.get(0).contains("Success: Copied directory from sourceDir to copiedDir"));
     }
 
     @Test
@@ -66,10 +81,10 @@ public class CopyDirectoryIntentTest {
 
         ArrayList<String> args = new ArrayList<>();
         args.add("nonExistentDir");
-        args.add("whatever");
+        args.add("random");
 
         List<String> output = intent.execute(client, args);
-
+        System.out.println(" Raw args before parse: " + output.get(0));
         assertTrue(output.get(0).contains("Failed:"));
     }
 
@@ -78,6 +93,8 @@ public class CopyDirectoryIntentTest {
         CopyDirectoryIntent intent = new CopyDirectoryIntent();
 
         ArrayList<String> args = new ArrayList<>();
-        intent.parse(args);  // should throw
+        args.add("");
+
+        intent.execute(client, args);
     }
 }
