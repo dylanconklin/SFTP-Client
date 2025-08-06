@@ -83,20 +83,7 @@ public class LocalRenameIntent extends Intent {
             // Perform the rename operation
             boolean success = sourceFile.renameTo(destinationFile);
             
-            if (success) {
-                // Success message
-                result.add("File renamed successfully");
-                result.add("From: " + sourceFile.getAbsolutePath());
-                result.add("To:   " + destinationFile.getAbsolutePath());
-                
-                // Add type information
-                if (destinationFile.isDirectory()) {
-                    result.add("Type: Directory");
-                } else if (destinationFile.isFile()) {
-                    result.add("Type: File");
-                    result.add("Size: " + formatFileSize(destinationFile.length()));
-                }
-            } else {
+            if (!success) {
                 result.add("Error: Failed to rename '" + sourceName + "' to '" + destinationName + "'");
                 result.add("This may be due to:");
                 result.add("- Files on different filesystems");
@@ -106,7 +93,6 @@ public class LocalRenameIntent extends Intent {
             }
             
             return result;
-            
         } catch (Exception e) {
             result.add("Error: Failed to rename file - " + e.getMessage());
             return result;
