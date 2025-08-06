@@ -46,6 +46,10 @@ public abstract class Intent {
                 intent = new LocalChangeDirectoryIntent();
                 break;
 
+            case "lrn":
+                intent = new LocalRenameIntent();
+                break;
+
             case "exit":
             case "quit":
                 intent = new ExitIntent();
