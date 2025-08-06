@@ -82,7 +82,11 @@ public abstract class Intent {
             case "rename":
                 intent = new RenameIntent();
                 break;
-                
+
+            case "pwd":
+                intent = new PresentWorkingDirectoryIntent();
+                break;
+
             default:
                 intent = new UnknownCommandIntent();
                 break;

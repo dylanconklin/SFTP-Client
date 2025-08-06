@@ -18,14 +18,7 @@ public class LocalPrintWorkingDirectoryIntent extends Intent {
     @Override
     public ArrayList<String> execute(Client client, ArrayList<String> args) {
         ArrayList<String> output = new ArrayList<>();
-        
-        try {
-            // Get current working directory
-            String currentDir = System.getProperty("user.dir");
-            output.add("Current local directory: " + currentDir);
-        } catch (Exception e) {
-            output.add("Error getting current directory: " + e.getMessage());
-        }
+        output.add(client.sftp.lpwd());
         logger.info(output.toString());
         return output;
     }

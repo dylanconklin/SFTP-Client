@@ -22,8 +22,8 @@ public class HelpIntent extends Intent {
         output.add("");
 
         output.add("Remote Server Commands:");
-        output.add("  get <remote_file> [local_file]   - Download file from server");
-        output.add("  put <local_file> [remote_file]   - Upload file to server");
+        output.add("  get [remote_file]                - Download file from server");
+        output.add("  put [local_file]                 - Upload file to server");
         output.add("  ls [remote_path]                 - List files in remote directory");
         output.add("  rm <remote_file>                 - Delete file on server");
         output.add("");
