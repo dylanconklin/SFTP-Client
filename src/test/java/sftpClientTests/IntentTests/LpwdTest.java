@@ -1,4 +1,4 @@
-package sftpClient;
+package test.java.sftpClientTests.IntentTests;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -3,6 +3,7 @@ package sftpClient.Intent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.SftpException;
@@ -10,6 +11,7 @@ import sftpClient.Client.Client;
 
 public class DeleteIntent extends Intent {
     ArrayList<String> files;
+    private static final Logger logger = Logger.getLogger(CreateDirectoryIntent.class.getName());
 
     @Override
     void parse(ArrayList<String> args) {
@@ -99,7 +101,7 @@ public class DeleteIntent extends Intent {
         } catch (Exception e) {
             output.add("Error deleting files.");
         }
-
+        logger.info(output.toString());
         return output;
     }
 }

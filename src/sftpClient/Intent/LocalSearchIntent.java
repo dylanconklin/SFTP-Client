@@ -112,6 +112,7 @@ public class LocalSearchIntent extends Intent {
             output.add("       lsearch -content <text> [path]");
             output.add("       lsearch -ext <extension> [path]");
             output.add("Options: -case (case sensitive), -nr (non-recursive)");
+            logger.info(output.toString());
             return output;
         }
 
@@ -119,7 +120,7 @@ public class LocalSearchIntent extends Intent {
         File searchDir = new File(searchPath);
         if (!searchDir.exists()) {
             output.add("Error: Search path does not exist: " + searchPath);
-            logger.warning("Error: Search path does not exist: " + searchPath);
+            logger.info(output.toString());
             return output;
         }
 
@@ -133,12 +134,10 @@ public class LocalSearchIntent extends Intent {
 
             if (results.isEmpty()) {
                 output.add("No files found matching the search criteria.");
-                logger.warning("No files found matching the search criteria.");
                 
             } else {
                 output.add("Found " + results.size() + " result(s):");
                 output.add("");
-                logger.info("Found " + results.size() + " result(s):");
 
                 for (File file : results) {
                     formatSearchResult(file, output);
@@ -147,9 +146,8 @@ public class LocalSearchIntent extends Intent {
 
         } catch (Exception e) {
             output.add("Error during search: " + e.getMessage());
-            logger.warning("Error during search: " + e.getMessage());
         }
-
+        logger.info(output.toString());
         return output;
     }
 

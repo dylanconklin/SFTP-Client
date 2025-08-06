@@ -36,11 +36,10 @@ public class CopyDirectoryIntent extends Intent {
         try {
             client.copyDirectory(src, dest);
             result.add("Success: Copied directory from `" + src + "` to `" + dest + "`");
-            logger.info("Success: Copied directory from `" + src + "` to `" + dest + "`");
         } catch (Exception e) {
             result.add("Failed: " + e.getMessage());
-            logger.warning("Failed: " + e.getMessage());
         }
+        logger.info(result.toString());
         return result;
     }
 }

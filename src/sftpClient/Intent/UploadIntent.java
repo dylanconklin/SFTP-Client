@@ -17,7 +17,6 @@ public class UploadIntent extends Intent {
         ArrayList<String> output = new ArrayList<>();
         if (args.size() < 2) {
             output.add("Error: Missing Parameters Like File Names");
-            logger.warning("Error: Missing Parameters Like File Names");
         }
         files = new ArrayList<>(args.subList(1, args.size()));
     }
@@ -33,11 +32,10 @@ public class UploadIntent extends Intent {
                     try (FileInputStream dest = new FileInputStream(file)) {
                         client.sftp.put(dest, file.getName());
                         result = "Uploaded " + file.getName() + " successfully.";
-                        logger.info(result);
                     } catch (Exception e) {
                         result = "Failed to upload " + file.getName() + ": " + e.getMessage();
-                        logger.warning(result);
                     }
+                    logger.info(result);
                     return result;
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
